@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8" />
+<title>Vírus</title>
+<style>
+  body { font-family: Arial, sans-serif; padding:20px; max-width:640px; margin:auto; }
+  input, textarea, button, select { width:100%; padding:8px; margin:8px 0; font-size:16px; box-sizing:border-box; }
+  .resultado { background:#f5f5f5; padding:10px; border-radius:6px; min-height:40px; }
+  label { font-weight:600; }
+</style>
+</head>
+<body>
+  <h2>Repetidor de palavras</h2>
+
+  <label for="frase">Frase:</label>
+  <input id="frase" placeholder="Digite uma frase">
+
+  <label for="vezes">Repetir cada palavra quantas vezes?</label>
+  <select id="vezes">
+    <option value="2">2 vezes</option>
+    <option value="3">3 vezes</option>
+    <option value="4">4 vezes</option>
+  </select>
+
+  <button id="btn">Infectar (repetir)</button>
+
+  <h3>Resultado:</h3>
+  <div class="resultado" id="saida"></div>
+
+<script>
+  const inputFrase = document.getElementById('frase');
+  const selVezes = document.getElementById('vezes');
+  const btn = document.getElementById('btn');
+  const saida = document.getElementById('saida');
+
+  btn.addEventListener('click', () => {
+    const texto = inputFrase.value.trim();
+    if (!texto) {
+      saida.textContent = '(digite algo)';
+      return;
+    }
+    const n = parseInt(selVezes.value, 10) || 2;
+    const palavras = texto.split(/\s+/);
+    const partes = palavras.map(p => Array.from({length: n}).fill(p).join(' '));
+    saida.textContent = partes.join(' ');
+  });
+
+  // permitir Enter no campo
+  inputFrase.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') btn.click();
+  });
+</script>
+</body>
+</html>

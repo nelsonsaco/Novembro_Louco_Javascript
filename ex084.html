@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu de Operações</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      width: 300px;
+      text-align: center;
+    }
+
+    input, select, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background: #032951;
+    }
+
+    #resultado {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Menu de Operações</h2>
+
+    <input type="number" id="numero" placeholder="Digite um número">
+
+    <select id="opcao">
+      <option value="fatorial">Calcular Fatorial</option>
+      <option value="parImpar">Verificar Par ou Ímpar</option>
+      <option value="primo">Verificar se é Primo</option>
+    </select>
+
+    <button onclick="executar()">Executar</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function executar() {
+      const numero = parseInt(document.getElementById('numero').value);
+      const opcao = document.getElementById('opcao').value;
+      const resultado = document.getElementById('resultado');
+
+      if (isNaN(numero)) {
+        resultado.innerText = 'Por favor, digite um número válido.';
+        return;
+      }
+
+      if (opcao === 'fatorial') {
+        resultado.innerText = `Fatorial de ${numero} = ${fatorial(numero)}`;
+      } else if (opcao === 'parImpar') {
+        resultado.innerText = numero % 2 === 0
+          ? `${numero} é Par`
+          : `${numero} é Ímpar`;
+      } else if (opcao === 'primo') {
+        resultado.innerText = ehPrimo(numero)
+          ? `${numero} é Primo`
+          : `${numero} não é Primo`;
+      }
+    }
+
+    function fatorial(n) {
+      let fat = 1;
+      for (let i = 1; i <= n; i++) {
+        fat *= i;
+      }
+      return fat;
+    }
+
+    function ehPrimo(n) {
+      if (n < 2) return false;
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

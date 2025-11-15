@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Validação de TextBox</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    input, select {
+      padding: 8px;
+      margin: 10px;
+      font-size: 16px;
+    }
+
+    input {
+      width: 250px;
+    }
+
+    select {
+      width: 280px;
+    }
+
+    /* Só pra dar feedback visual */
+    input:valid {
+      border: 2px solid green;
+    }
+
+    input:invalid {
+      border: 2px solid red;
+    }
+  </style>
+</head>
+<body>
+  <h2>Textbox com restrições</h2>
+
+  <select id="modo">
+    <option value="numeros">Apenas números</option>
+    <option value="texto">Apenas texto</option>
+    <option value="pares">Apenas números pares</option>
+    <option value="vogais">Apenas vogais</option>
+    <option value="primos">Apenas números primos</option>
+    <option value="lista">Apenas valores da lista [1,2,3,4,5,6,7,8,9]</option>
+  </select>
+
+  <br>
+  <input type="text" id="entrada" placeholder="Digite aqui..." />
+
+  <script>
+    const entrada = document.getElementById("entrada");
+    const modo = document.getElementById("modo");
+
+    const listaPermitida = [1,2,3,4,5,6,7,8,9];
+
+    function ehPrimo(num) {
+      if (num < 2) return false;
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+      }
+      return true;
+    }
+
+    entrada.addEventListener("input", () => {
+      let valor = entrada.value;
+      let tipo = modo.value;
+
+      if (tipo === "numeros" && /[^0-9]/.test(valor)) {
+        entrada.value = valor.replace(/[^0-9]/g, "");
+      }
+
+      else if (tipo === "texto" && /[^a-zA-ZÀ-ÿ\s]/.test(valor)) {
+        entrada.value = valor.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
+      }
+
+      else if (tipo === "pares" && valor !== "") {
+        let num = parseInt(valor);
+        if (isNaN(num) || num % 2 !== 0) entrada.value = "";
+      }
+
+      else if (tipo === "vogais" && /[^aeiouAEIOU]/.test(valor)) {
+        entrada.value = valor.replace(/[^aeiouAEIOU]/g, "");
+      }
+
+      else if (tipo === "primos" && valor !== "") {
+        let num = parseInt(valor);
+        if (isNaN(num) || !ehPrimo(num)) entrada.value = "";
+      }
+
+      else if (tipo === "lista" && valor !== "") {
+        let num = parseInt(valor);
+        if (!listaPermitida.includes(num)) entrada.value = "";
+      }
+    });
+  </script>
+</body>
+</html>

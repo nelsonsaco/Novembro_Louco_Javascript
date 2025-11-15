@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>title</title>
+</head>
+<body>
+  <label>Digite uma frase (vogais não serão aceitas):</label>
+  <input type="text" id="inputTexto" />
+
+  <script>
+    const input = document.getElementById('inputTexto');
+
+    input.addEventListener('input', () => {
+      // Substitui todas as vogais digitadas por nada
+      input.value = input.value.replace(/[aeiouAEIOU]/g, '');
+    });
+  </script>
+</body>
+</html>

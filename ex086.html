@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Contador de Nomes</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  input, button { margin: 5px 0; }
+  ul { list-style: none; padding: 0; }
+  li { margin: 3px 0; }
+</style>
+</head>
+<body>
+
+<h2>Inserir Nomes</h2>
+<input type="text" id="nomeInput" placeholder="Digite um nome">
+<button onclick="adicionarNome()">Adicionar</button>
+
+<h3>Lista de Nomes:</h3>
+<ul id="listaNomes"></ul>
+
+<h3>Resumo:</h3>
+<p id="resumo"></p>
+
+<script>
+const nomes = {}; // objeto para contar os nomes
+
+function adicionarNome() {
+  let nome = document.getElementById("nomeInput").value.trim();
+  if (nome === "") return;
+  
+  nome = nome.toLowerCase(); // ignora maiúsculas/minúsculas
+
+  // atualiza contagem
+  if (nomes[nome]) {
+    nomes[nome]++;
+  } else {
+    nomes[nome] = 1;
+  }
+
+  atualizarLista();
+  document.getElementById("nomeInput").value = "";
+}
+
+function atualizarLista() {
+  const lista = document.getElementById("listaNomes");
+  lista.innerHTML = "";
+
+  let maxNome = "", maxCount = 0;
+  let minNome = "", minCount = Infinity;
+
+  for (let nome in nomes) {
+    const count = nomes[nome];
+    const li = document.createElement("li");
+    li.textContent = `${nome} - ${count}`;
+    lista.appendChild(li);
+
+    if (count > maxCount) {
+      maxCount = count;
+      maxNome = nome;
+    }
+    if (count < minCount) {
+      minCount = count;
+      minNome = nome;
+    }
+  }
+
+  document.getElementById("resumo").textContent =
+    `Mais inserido: ${maxNome} (${maxCount} vezes), Menos inserido: ${minNome} (${minCount} vezes)`;
+}
+</script>
+
+</body>
+</html>
