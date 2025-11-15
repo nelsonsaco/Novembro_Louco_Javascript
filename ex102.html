@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Remover espaços</title>
+</head>
+<body>
+
+<textarea id="texto" rows="5" cols="50" placeholder="Digite seu texto aqui..."></textarea>
+<br>
+<button onclick="removerEspacos()">Remover espaços</button>
+<p>Resultado:</p>
+<div id="saida"></div>
+
+<script>
+function removerEspacos() {
+     const texto = document.getElementById('texto').value;
+   
+    const semEspacos = texto.replace(/\s+/g, '');
+    document.getElementById('saida').textContent = semEspacos;
+}
+</script>
+
+</body>
+</html>
